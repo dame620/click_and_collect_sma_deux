@@ -53,6 +53,7 @@ export default{
         ongetlistuser(){
             axios.get('/list-user').then(response=>{
                    this.wrappers=response.data.data
+                   console.log("list des users", this.wrappers)
                    this.wrapperlength=response.data.data.length
             })
             .catch(({message})=>{

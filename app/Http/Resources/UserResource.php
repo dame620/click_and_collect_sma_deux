@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use App\Http\Resources\ProfileResource;
+use App\Http\Resources\ShipmentResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class UserResource extends JsonResource
@@ -24,6 +25,7 @@ class UserResource extends JsonResource
             'adresse'           => $this->adresse,
             //'profil'            => ProfileResource::make($this->profil),
             'packageorenvelops' => $this->packageorenvelops,
+            'shipments'         => $this->shipments,
         ];
     }
 }

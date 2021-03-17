@@ -246,7 +246,7 @@
                                 {{listValue}}
                             </option>
                           </select>
-                        </div>
+                      </div>
                     <div class="form-group">
                       <label for=""
                         >Description
@@ -394,12 +394,14 @@ export default {
   data() {
     return {
       valuesList: ['Selectionner un produit', 'Vetements','Cosmetiques','Decorations', 'Electronique', 'Comestibles', 'Autres'],
+      valuelistforwrapper:[],
       is_package: true,
       is_envelope: false,
 
       wrappers: [
         {
           pickupdates: new Date(),
+          shipmentreason:null,
           width: null,
           height: null,
           length: null,

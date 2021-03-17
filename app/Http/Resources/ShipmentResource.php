@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Http\Resources\UserResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ShipmentResource extends JsonResource
@@ -28,6 +29,7 @@ class ShipmentResource extends JsonResource
             'receivercityName'   => $this->receivercityName,
             'created_at'         => $this->created_at,
             'statu'              => $this->statu,
+            'user'               => UserResource::make($this->user),
             'packageorenvelops'  => PackageorenvelopResource::collection($this->packageorenvelops),
         ];
     }

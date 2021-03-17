@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\User;
 use App\Statu;
 use App\Packageorenvelop;
 use Illuminate\Database\Eloquent\Model;
@@ -22,6 +23,10 @@ class Shipment extends Model
         
     }
 
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
+
     protected static function boot(){
  
         parent::boot();
@@ -31,6 +36,7 @@ class Shipment extends Model
         //ce created is an event
         static::creating(function ($shipment) use ($status) {
             $shipment->statu_id = $status->id;
+            $shipment->user_id = auth()->id();
         });
     
     }

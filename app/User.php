@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Shipment;
 use App\Packageorenvelop;
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
@@ -40,6 +41,10 @@ class User extends Authenticatable
 
         return $this->hasMany(Packageorenvelop::class);
 
+    }
+
+    public function shipments(){
+        return $this->hasMany(Shipment::class);
     }
 
     protected static function boot(){
