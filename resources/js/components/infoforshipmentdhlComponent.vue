@@ -622,19 +622,7 @@
                     wrappers[i].trackingnumber=responseData.shipmentTrackingNumber;
                     wrappers[i].labelbase64=responseData.documents[0].content;
                 }
-               /* responses.forEach(function(response){
-                    const responseData = JSON.parse(response);
-                    console.log(responseData);
-                    console.log("base64 code" ,responseData.documents[0].content)
-                    console.log(responseData.shipmentTrackingNumber);
-                    wrappers.trackingnumber=responseData.shipmentTrackingNumber;
-                    //parcourir les wrapper pour leur donner le tracking number
-                    wrappers.forEach(function(wrapper){
-                        wrapper.trackingnumber=responseData.shipmentTrackingNumber;
-                        wrapper.labelbase64=responseData.documents[0].content;
-                    }) 
-                  
-                })*/
+
                 sessionStorage.setItem("wrappers", JSON.stringify(wrappers));
                 this.loaderpage=true;
                 this.$router.push('/package/create');

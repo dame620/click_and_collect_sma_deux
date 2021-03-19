@@ -160,6 +160,7 @@ export default {
   },
 
   mounted() {
+    sessionStorage.clear()  
     this.onLoadWrappers();
     this.getconnecteduser();
     this.getResults();

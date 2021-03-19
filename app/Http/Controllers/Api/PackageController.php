@@ -45,7 +45,7 @@ class PackageController extends Controller
 			'pickupfullName' => $pack['shipmentdetails']['pickupfullName'],
 			'trackingnumber' => $pack['trackingnumber'],
 			'labelbase64' => $pack['labelbase64'],
-			'tatalprice'  => $pack['shipmentdetails']['tatalprice'],
+			'tatalprice'  => $pack['sum_for_total_price_for_invoice'],
 
 			'receiverpostalCode' => $pack['shipmentdetails']['receiverpostalCode'],
 			'receivercityName' => $pack['shipmentdetails']['receivercityName'],

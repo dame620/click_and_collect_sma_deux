@@ -1,39 +1,10 @@
 <template>
   <div class="page-6">
     <!--loader start-->
-      <div style="display:flex; justify-content:center; margin-top:5px; margin-bottom:5px;">
+      <!--div style="display:flex; justify-content:center; margin-top:5px; margin-bottom:5px;">
       <h5 v-if="data_loading == false" style="background:rgb(218, 175, 127); height:35px; padding:10px; color:white;">PATIENTEZ NOUS CHERCHONS LE MEILLEUR PRIX POUR VOUS</h5>
-      </div>
-      
-
-        <div class="container_plan_loader" v-if="data_loading == false">
-             <div class="loader">
-            <span style="--i:1"></span>
-            <span style="--i:2"></span>
-            <span style="--i:3"></span>
-            <span style="--i:4"></span>
-            <span style="--i:5"></span>
-            <span style="--i:6"></span>
-            <span style="--i:7"></span>
-            <span style="--i:8"></span>
-            <span style="--i:9"></span>
-            <span style="--i:10"></span>
-            <span style="--i:11"></span>
-            <span style="--i:12"></span>
-            <span style="--i:13"></span>
-            <span style="--i:14"></span>
-            <span style="--i:15"></span>
-            <span style="--i:16"></span>
-            <span style="--i:17"></span>
-            <span style="--i:18"></span>
-            <span style="--i:19"></span>
-            <span style="--i:20"></span>   
-            <div class="rocket"></div> 
-        </div>
-        </div>
-    
-    <!--loader start-->
-    <div class="wrapper" v-if="data_loading == true">
+      </div-->
+    <div class="wrapper">
       
 
       <div class="row">
@@ -136,107 +107,17 @@
         if(wrappers!=null){
             console.log(wrappers);
         }
+        
         this.wrappers.forEach(wrapper=>{
-          wrapper.width  = wrapper.width.replace(/,/g, '.')
-          wrapper.height = wrapper.height.replace(/,/g, '.')
-          wrapper.weight = wrapper.weight.replace(/,/g, '.')
-          wrapper.length = wrapper.length.replace(/,/g, '.')
-          var moment = require('moment');
-          //const format2 = 'YYYY-MM-DDTHH:mm:ss';
-          const format2 = 'YYYY-MM-DD';
-          const dateformat=moment(wrapper.pickupdate).format(format2);
-          wrapper.pickupdate=dateformat;
-         // wrapper.pickupdate=dateformat+' GMT+00:00';
+          this.sum_for_total_price_all_taxe=(wrapper.sum_for_total_price_for_invoice.toLocaleString('it-IT', {style: 'currency', currency: 'XOF'}))
         })
         //fin de recupération des données
         //fetch request
-          const formattedWrappers = wrappers.map(function(wrapper) {
-        return {
-            width:  wrapper.width,
-            height: wrapper.height,
-            weight: wrapper.weight,
-            length: wrapper.length,
-            origincountry: wrapper.origincountry,
-            destinationcountry: wrapper.destinationcountry,
-            originregion: wrapper.originregion,
-            destinationregion: wrapper.destinationregion,
-            pickupdate: wrapper.pickupdates
-        }
-      });
-      console.log("formated wrappers",formattedWrappers);
-
-      /*formattedWrappers.push({
-          width: 19,
-          height:11,
-          weight: 6,
-          length: 17,
-      });*/
-
-      const headers = new Headers();
-      headers.append('Content-Type', 'application/json');
-      headers.append('X-CSRF-TOKEN', window.csrfContent);
-      
-      const options = {
-          method: 'POST',
-          headers: headers,
-          body: JSON.stringify({
-              packages: formattedWrappers
-          })
-      };
-      
-      const request = new Request('/get-rates', options);
-
-      fetch(request, options)
-      .then(response => response.json())
-      .then(data => {
-          console.log("content data",data);
-          var responses=data.responses;
-
-          this.responses=responses;
-
-          //console.log(this.responses)
-          // table_for_price est la variable qui doit contenir les prix de l'ensemble des paquets
-          var table_for_price=[];
-          responses.forEach(response => {
-
-                  const product = response.products[0];
-                  const prix=product.totalPrice[0].price;
-                  console.log("prix hors taxe sma",prix);
-                  table_for_price.push(prix);
-          });
-          console.log("la table contenant les paquets",table_for_price);
-
-          const sum_for_total_price = table_for_price.reduce((acc, number) => {
-          return number + acc; 
-          }, 0);
-
-          this.sum_for_total_price=sum_for_total_price;
-          console.log("la somme total a payer hors taxe", sum_for_total_price)
-          const sum_for_total_price_taxe=Math.round(sum_for_total_price*1.416)
-          this.sum_for_total_price_all_taxe=(sum_for_total_price_taxe.toLocaleString('it-IT', {style: 'currency', currency: 'XOF'})) 
-
-           console.log("somme à payer afficher à l'utilisateur", this.sum_for_total_price_all_taxe);
-
-           //pass the price to the wrappers
-           /*wrappers.forEach(wrapper=>{
-             wrapper.sum_for_total_price_for_invoice=this.sum_for_total_price_all_taxe;
-           })
-           sessionStorage.setItem("wrappers", JSON.stringify(wrappers));*/
-      })
-      .catch(error=>{
-          console.error('error:', error)
-          alert("une erreur c'est produite réessayer")
-      })
-      .finally(()=>{
-          this.data_loading = true;
-      })
+         
 
 
      
       },
-
-
-        
              methods:{
             
                  gotonextpage(){
@@ -254,108 +135,7 @@
 <style scoped>
 /*style loader*/
   /*css loader*/
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
 
-/*css du container principal*/
-.container_plan_loader{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background: rgb(233, 154, 60);
-}
-
-.loader{
-    position: relative;    
-    width: 120px;
-    height: 120px;
-}
-
-.loader span
-{
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;   
-    height: 100%; 
-    transform: rotate(calc(18deg * var(--i)));
-}
-
-.loader span::before{
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 15px;
-    height: 15px;
-    background: rgb(242, 241, 240);
-    border-radius: 50%;
-    animation: animate 2s linear infinite;
-    animation-delay:calc(0.1s * var(--i));
-}
-
-@keyframes animate
-{
-    0%
-    {
-        transform: scale(0);
-    }   
-    
-    10%
-    {
-        transform: scale(1.2);
-    }
-
-    80%, 100%
-    {
-        transform: scale(0.5);
-    }
-}
-
-.rocket{
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    animation: rotating 2s linear infinite;
-    animation-delay: -1s;
-}
-
-@keyframes rotating
-{
-    0%
-    {
-        transform: rotate(10deg);    
-    }
-    100%{
-        transform: rotate(370deg);       
-    }
-
-}
-
-.rocket::before
-{
-    content: '';
-    font-family: fontAwesome;
-    position: absolute;   
-    top: 80px;
-    left: 85px;
-    color: #fff;
-    font-size: 60px;
-    transform: rotate(180deg);
-}
-
-.rocket img{
-    background:rgb(233, 154, 60);
-    border-radius: 50%;
-}
-
-/*end css loader*/
 /*end style loader */
 
 /*
